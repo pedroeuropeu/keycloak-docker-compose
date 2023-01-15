@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  keycloak:
+    container_name: keycloak-ovh
+    image: quay.io/keycloak/keycloak:latest
+    restart: unless-stopped
+    env_file:
+      - ./keycloak.env
+    environment:
+      KC_FEATURES:
+        authorization
+        token-exchange
+        docker
+        impersonation
+        scripts
+        upload-scripts
+        web-authn
+        client-policies
+        dynamic-scopes
+    entrypoint: /opt/keycloak/bin/kc.sh start --auto-build
+    volumes:
+      - /opt/keycloak-deployment/fullchain.pem:/opt/keycloak/conf/fullchain.pem
+      - /opt/keycloak-deployment/privkey.pem:/opt/keycloak/conf/privkey.pem
+    ports:
+      - 8080:8080
+      - 443:443
+    networks:
+      - keycloak-network
+networks:
+  keycloak-network:
+    driver: bridge
