@@ -22,7 +22,6 @@ services:
       - /opt/keycloak-deployment/fullchain.pem:/opt/keycloak/conf/fullchain.pem
       - /opt/keycloak-deployment/privkey.pem:/opt/keycloak/conf/privkey.pem
     ports:
-      - 8080:8080
       - 443:443
     networks:
       - keycloak-network
